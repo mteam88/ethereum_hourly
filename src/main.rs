@@ -3,9 +3,6 @@ fn main() {
     // Unix Timestamp,Date,Symbol,Open,High,Low,Close,Volume is expected column headers
     let data = load_csv("data/ETH_1H.csv");
 
-    // print first 5 rows
-    println!("{:?}", &data[0..5]);
-
     // convert all rows to candles
     let candles: Vec<Candle> = data.iter().map(|row| {
         let hour = (row.timestamp / 1000 / 3600) % 24; // divide by 1000 because timestamp is in milliseconds
@@ -16,9 +13,6 @@ fn main() {
             difference: (row.close - row.open),
         }
     }).collect();
-
-    // print first 5 candles
-    println!("{:?}", &candles[0..5]);
 
     // for each hour, calculate the average difference
     let mut average_differences: Vec<(u64, f64)> = Vec::new();
@@ -37,7 +31,7 @@ fn main() {
     }
 
     // print average differences
-    println!("{:?}", average_differences);
+    println!("{:#?}", average_differences);
 
     // find the hour with the highest average difference
     let mut highest_average_difference = 0.0;
